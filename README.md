@@ -62,7 +62,7 @@ Unit test data in data/unit_test.jsonl.
 
 If custom data was generated, it can be downloaded from: Google Drive Link
 .
-
+```
 ## Data format (JSONL):
 
 {
@@ -70,7 +70,7 @@ If custom data was generated, it can be downloaded from: Google Drive Link
   "answer": "Correct category/label here"
 }
 
-
+```
 Labels: World, Sports, Business, Sci/Tech
 
 ## Base Model Evaluation
@@ -102,26 +102,18 @@ We fine-tuned the same base model using LoRA:
 
 LoRA configuration:
 ```
-r = 4
+r = 8
 
-lora_alpha = 8
+lora_alpha = 16
 
 target_modules = ["q_lin", "v_lin"]
 
 lora_dropout = 0.1
 
 Task type: SEQ_CLS
-
-Training setup:
-
-Batch size: 8
-
-Epochs: 2 (unit test), full training: 10+
-
-Optimizer: AdamW
-
-GPU: DeepDish NVIDIA GPUs
 ```
+
+
 ## Evaluation after LoRA fine-tuning:
 
 Metric	Result
@@ -139,7 +131,7 @@ Stock market trends today?	Business	Business
 
 Fine-tuned model correctly predicts domain-specific questions that base model failed.
 
-Accuracy increased from 20% → 50%, F1-weighted from 13% → 45%.
+Accuracy increased from 0.25 → 0.918, F1-weighted from 0.1 → 0.918
 
 LoRA allows efficient fine-tuning of low-rank adaptations instead of full model weights.
 
@@ -157,20 +149,20 @@ Trains for 3 epochs only.
 
 Compares base model vs fine-tuned model metrics.
 
-Run the unit test:
-
+## Run the unit test:
+```
 python src/unit_test.py
+```
 
-
-Sample metrics from unit test:
-
-Model	Accuracy	Weighted F1
-Base	20%	13%
-LoRA Fine-Tuned	50%	45%
-
+## Sample metrics from unit test:
+```
+Model	  Accuracy	Weighted F1
+Base	   0.2	       0.13
+LoRA       0.5	       0.45
+```
 Metrics are saved in: outputs/unit_test_model/unit_test_metrics.json
 
-Observations
+## Observations
 
 Base model underperforms on specific tasks; LoRA fine-tuning significantly improves predictions.
 
